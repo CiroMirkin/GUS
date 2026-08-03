@@ -12,7 +12,7 @@ function getDocRef(subjectId: string, reminderId: string) {
 }
 
 async function fetchReminders(subjectId: string): Promise<Reminder[]> {
-  const q = query(getDocsRef(subjectId), orderBy("expiresAt", "asc"))
+  const q = query(getDocsRef(subjectId), orderBy("createdAt", "desc"))
   const snapshot = await getDocs(q)
   return snapshot.docs.map((d) => ({
     id: d.id,
@@ -28,22 +28,16 @@ export function useReminders(subjectId: string) {
   })
 }
 
-type CreateReminderData = {
-  title: string
-  content: string
-  expiresAt: string
-  done: boolean
-}
-
-type UpdateReminderData = Partial<CreateReminderData> & { id: string }
+type UpdateReminderData = Partial<Pick<Reminder, "content" | "done">> & { id: string }
 
 export function useCreateReminder(subjectId: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (data: CreateReminderData) =>
+    mutationFn: (content: string) =>
       addDoc(getDocsRef(subjectId), {
         subjectId,
-        ...data,
+        content,
+        done: false,
         createdAt: new Date().toISOString(),
       }),
 
@@ -89,14 +83,6 @@ export function useDeleteReminder(subjectId: string) {
   })
 }
 
-function isExpiringSoon(expiresAt: string): boolean {
-  const now = new Date()
-  const expireDate = new Date(expiresAt)
-  const diffMs = expireDate.getTime() - now.getTime()
-  const diffDays = diffMs / (1000 * 60 * 60 * 24)
-  return diffDays < 7
-}
-
 export function useCareerReminders(_careerId: string, subjectIds: string[]) {
   const results = useQueries({
     queries: subjectIds.map((subjectId) => ({
@@ -109,12 +95,12 @@ export function useCareerReminders(_careerId: string, subjectIds: string[]) {
     (r.data ?? []).map((rem) => ({ ...rem, _subjectIndex: i }))
   )
 
-  const upcoming = allReminders.filter((r) => isExpiringSoon(r.expiresAt))
+  const pending = allReminders.filter((r) => !r.done)
 
-  upcoming.sort((a, b) => a.expiresAt.localeCompare(b.expiresAt))
+  pending.sort((a, b) => a.createdAt.localeCompare(b.createdAt))
 
   return {
-    data: upcoming,
+    data: pending,
     isLoading: results.some((r) => r.isLoading),
     error: results.find((r) => r.error)?.error ?? null,
   }

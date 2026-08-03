@@ -31,12 +31,13 @@ export function EvaluationItem({ evaluation, subjectId }: EvaluationItemProps) {
   }
 
   return (
-    <Card className={cn('group mb-2', getUrgencyClass(evaluation.date))}>
-      <CardHeader>
+    <Card className={cn('group mb-2 p-2 pt-0', getUrgencyClass(evaluation.date))}>
+      <CardHeader className='p-0 pl-1'>
         <div className="flex items-center justify-between gap-2">
-          <CardTitle>
+          <CardTitle className='leading-sm truncate w-30'>
             <InlineEditableText
               value={evaluation.title}
+              className='truncate text-sm'
               onSave={(title) => updateEvaluation.mutate({ ...evaluation, title })}
             />
           </CardTitle>
@@ -50,13 +51,14 @@ export function EvaluationItem({ evaluation, subjectId }: EvaluationItemProps) {
             <Trash2 size={16} />
           </Button>
         </div>
-        <CardDescription className="flex flex-col items-start gap-1 flex-wrap">
+        <CardDescription className="flex flex-col items-start gap-1 flex-wrap text-xs">
           <InlineEditableSelect
             value={evaluation.type}
             options={evaluationTypes}
             onSave={(type) => updateEvaluation.mutate({ ...evaluation, type: type as Evaluation['type'] })}
           />
-          <InlineEditableText
+          <div className="flex gap-2">
+            <InlineEditableText
             type="date"
             value={evaluation.date}
             className="font-semibold"
@@ -65,9 +67,10 @@ export function EvaluationItem({ evaluation, subjectId }: EvaluationItemProps) {
           <InlineEditableText
             type="number"
             value={evaluation.grade === null ? "" : String(evaluation.grade)}
-            placeholder="Sin nota"
+            placeholder="S/N"
             onSave={(grade) => updateEvaluation.mutate({ ...evaluation, grade: grade === '' ? null : Number(grade) })}
           />
+          </div>
         </CardDescription>
       </CardHeader>
     </Card>

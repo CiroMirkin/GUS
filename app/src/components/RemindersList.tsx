@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { useReminders, useCreateReminder, useUpdateReminder, useDeleteReminder } from '@/hooks/useReminders'
+import { Input } from './ui/input'
 import { Reminder } from './Reminder'
-import { CreateReminderDialog } from './CreateReminderDialog'
 
 interface RemindersListProps {
   subjectId: string
@@ -11,6 +12,22 @@ export function RemindersList({ subjectId }: RemindersListProps) {
   const createReminder = useCreateReminder(subjectId)
   const updateReminder = useUpdateReminder(subjectId)
   const deleteReminder = useDeleteReminder(subjectId)
+  const [newContent, setNewContent] = useState('')
+
+  function handleCreate() {
+    const trimmed = newContent.trim()
+    if (!trimmed) return
+    createReminder.mutate(trimmed, {
+      onSuccess: () => setNewContent(''),
+    })
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleCreate()
+    }
+  }
 
   function handleDelete(reminderId: string) {
     if (confirm('¿Eliminar este recordatorio?')) {
@@ -20,9 +37,16 @@ export function RemindersList({ subjectId }: RemindersListProps) {
 
   return (
     <div className="p-1">
-      <div className="flex items-center justify-between gap-4 mb-4">
-        <h2 className="text-xl font-semibold">Recordatorios</h2>
-        <CreateReminderDialog onCreate={createReminder.mutate} isPending={createReminder.isPending} />
+      <div className="mb-4">
+        <Input
+          type="text"
+          value={newContent}
+          onChange={(e) => setNewContent(e.target.value.slice(0, 200))}
+          onKeyDown={handleKeyDown}
+          placeholder="Nuevo recordatorio..."
+          className="flex-1 px-3 py-2 border rounded text-sm"
+          maxLength={200}
+        />
       </div>
 
       {isLoading && <p className="text-gray-500 text-sm">Cargando recordatorios...</p>}

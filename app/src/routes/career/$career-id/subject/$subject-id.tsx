@@ -70,22 +70,21 @@ function Subject() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <main className="pt-4 grid grid-cols-1 lg:grid-cols-[1fr_3fr_1fr] gap-6">
-        <section className='max-w-50 flex flex-col gap-4'>
-          <SubjectEvaluationsCalendar subjectId={subjectId} />
-          <EvaluationsList subjectId={subjectId} />
-        </section>
-        <section>
+
+      <main className="pt-4 grid grid-cols-1 lg:grid-cols-[3.5fr_1.5fr] gap-6">
+        <section className="min-w-0">
           {activeSection === 'document'
             ? <Outlet />
             : <DocumentsList subjectId={subjectId} careerId={careerId} />}
         </section>
-        <section className='max-w-60'>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Notas</h2>
+
+        <section className="flex flex-col gap-4 pb-6">
+          <div className="flex flex-wrap items-start gap-4">
+            <SubjectEvaluationsCalendar subjectId={subjectId} />          
+            <EvaluationsList subjectId={subjectId} />
           </div>
-          <NotesList subjectId={subjectId} />
           <RemindersList subjectId={subjectId} />
+          <NotesList subjectId={subjectId} />
         </section>
       </main>
     </div>

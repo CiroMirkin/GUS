@@ -30,13 +30,7 @@ export function EvaluationsList({ subjectId }: EvaluationsListProps) {
   }, [evaluations])
 
   return (
-    <div className='p-1'>
-      <div className="flex items-center justify-between gap-4 mb-4">
-        <h2 className="text-xl font-semibold">Evaluaciones</h2>
-        <Button variant='outline' onClick={() => setIsDialogOpen(true)}>
-          <Plus size={16} />
-        </Button>
-      </div>
+    <div className='p-1 w-36'>
       {isLoading && <p className="text-gray-500">Cargando evaluations...</p>}
       {error && <p className="text-red-500">Error al cargar las evaluations.</p>}
       {sortedEvaluations?.map((ev) => (
@@ -47,6 +41,11 @@ export function EvaluationsList({ subjectId }: EvaluationsListProps) {
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
       />
+      <div className="flex items-center justify-between gap-4 mb-4">
+        <Button variant='outline' onClick={() => setIsDialogOpen(true)}>
+          <Plus size={16} />
+        </Button>
+      </div>
     </div>
   )
 }
