@@ -37,7 +37,7 @@ type MarkdownEditorProps = {
 export function MarkdownEditor({
   value = '',
   onChange,
-  placeholder = 'Escribe / para abrir el menu',
+  placeholder = 'Escribe algo ...',
   autoFocus = true,
   className,
 }: MarkdownEditorProps) {

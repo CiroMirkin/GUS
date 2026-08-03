@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useDocument, useUpdateDocument, useDeleteDocument } from '@/hooks/useDocuments'
 import { MarkdownEditor } from '@/components/MarkdownEditor'
 import { DocumentsList } from '@/components/DocumentsList'
+import { InlineEditableText } from '@/components/InlineEditableField'
 import { exportAsMarkdown } from '@/lib/exportDocument'
 import { Button } from '@/components/ui/button'
 import type { Document } from '@/types/document'
@@ -81,12 +82,11 @@ function DocumentForm({
   return (
     <div className="w-full grid place-items-center print:hidden">
       <div className="w-full max-w-7xl">
-        <input
-          type="text"
+        <InlineEditableText
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-4 py-2 mb-4 border"
-          required
+          onSave={setTitle}
+          placeholder="Título del documento"
+          className="w-full px-4 block text-2xl font-semibold"
         />
       </div>
       <div className="mb-4 w-full max-w-7xl">
