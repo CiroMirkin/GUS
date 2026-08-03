@@ -37,7 +37,7 @@ export function NotesList({ subjectId }: NotesListProps) {
 
   return (
     <>
-      <div className="mb-4">
+      <div>
         <Input
           type="text"
           value={newContent}

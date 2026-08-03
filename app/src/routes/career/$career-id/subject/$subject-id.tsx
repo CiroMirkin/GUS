@@ -79,10 +79,12 @@ function Subject() {
         </section>
 
         <section className="flex flex-col gap-4 pb-6">
-          <div className="flex flex-wrap items-start gap-4">
-            <SubjectEvaluationsCalendar subjectId={subjectId} />          
-            <EvaluationsList subjectId={subjectId} />
-          </div>
+          {activeSection !== 'document' && 
+            <div className="flex flex-wrap items-start gap-4">
+              <SubjectEvaluationsCalendar subjectId={subjectId} />
+              <EvaluationsList subjectId={subjectId} />
+            </div>
+          }
           <RemindersList subjectId={subjectId} />
           <NotesList subjectId={subjectId} />
         </section>
