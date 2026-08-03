@@ -1,5 +1,4 @@
 import { Trash2, Check } from 'lucide-react'
-import { MiniMarkdownEditor } from './MiniMarkdownEditor'
 import { Card, CardHeader } from './ui/card'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'

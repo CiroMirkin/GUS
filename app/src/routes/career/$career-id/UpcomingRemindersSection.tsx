@@ -1,15 +1,6 @@
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useCareerReminders } from '@/hooks/useReminders'
-import { getDaysUntil } from '@/lib/evaluations'
 import { Link } from '@tanstack/react-router'
-
-function getUrgencyLabel(expiresAt: string) {
-  const daysUntil = getDaysUntil(expiresAt)
-  if (daysUntil < 0) return 'Vencido'
-  if (daysUntil === 0) return 'Vence hoy'
-  if (daysUntil === 1) return 'Vence mañana'
-  return `Vence en ${daysUntil} días`
-}
 
 export default function UpcomingRemindersSection({ careerId, subjects }: { careerId: string; subjects: { id: string; name: string }[] }) {
   const subjectIds = subjects.map((s) => s.id)
@@ -32,10 +23,9 @@ export default function UpcomingRemindersSection({ careerId, subjects }: { caree
                   params={{ 'career-id': careerId, 'subject-id': rem.subjectId }}
                   className="font-medium hover:underline"
                 >
-                  {rem.title}
+                  {rem.content}
                 </Link>
                 <span className="text-gray-500 ml-1">({subject?.name ?? rem.subjectId})</span>
-                <p className="text-xs text-gray-400">{getUrgencyLabel(rem.expiresAt)}</p>
               </div>
             )
           })}
