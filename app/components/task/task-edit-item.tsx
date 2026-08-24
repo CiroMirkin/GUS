@@ -2,8 +2,9 @@ import { Task } from "@/types/task";
 import { Subject } from "@/types/subject";
 import { useState } from "react";
 import { View, Text, Pressable, TextInput, Platform } from "react-native";
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker"
 import { formatDateLocal, stringToLocalDate } from "@/lib/date";
+import DateTimeInput from "../ui/date-time-input";
 
 function TaskEditItem({
   task,
@@ -92,10 +93,9 @@ function TaskEditItem({
         </Pressable>
       )}
       {showPicker && (
-        <DateTimePicker
+        <DateTimeInput
           value={date ?? new Date()}
           mode="date"
-          display={Platform.OS === "ios" ? "spinner" : "default"}
           onChange={onChangeDate}
         />
       )}

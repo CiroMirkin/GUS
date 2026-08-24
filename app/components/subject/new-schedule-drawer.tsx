@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { Platform, Pressable, Text, View } from "react-native"
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker"
 import clsx from "clsx"
 import Drawer from "@/components/ui/drawer"
 import { useSubjectsStore } from "@/stores/subjectsStore"
 import { formatTimeLocal, parseTimeLocal } from "@/lib/date"
 import { ScheduleModality, MODALITY_LABELS, Schedule as ScheduleType } from "@/types/subject"
+import DateTimeInput from "../ui/date-time-input"
 
 interface Props {
   visible: boolean
@@ -193,11 +194,9 @@ export default function NewScheduleDrawer({ visible, onClose, subjectId, schedul
       </View>
 
       {form.showPicker && (
-        <DateTimePicker
+        <DateTimeInput
           value={(form.pickerMode === "start" ? form.startTime : form.endTime) ?? new Date()}
           mode="time"
-          is24Hour
-          display={Platform.OS === "ios" ? "spinner" : "default"}
           onChange={onChangeTime}
         />
       )}

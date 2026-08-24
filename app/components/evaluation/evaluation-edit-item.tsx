@@ -2,9 +2,10 @@ import { Evaluation, EvaluationType } from "@/types/evaluation";
 import { Subject } from "@/types/subject";
 import { useState } from "react";
 import { View, Text, Pressable, TextInput, Platform } from "react-native";
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker"
 import { TYPE_LABELS } from "@/types/evaluation";
 import { formatDateLocal, formatTimeLocal, evaluationToDate } from "@/lib/date";
+import DateTimeInput from "../ui/date-time-input";
 
 function EvaluationEditItem({
   evaluation,
@@ -71,14 +72,12 @@ function EvaluationEditItem({
           <Pressable
             key={s.id}
             onPress={() => setSubjectId(s.id)}
-            className={`rounded-full px-3 py-1.5 ${
-              subjectId === s.id ? "bg-blue-500" : "bg-white"
-            }`}
+            className={`rounded-full px-3 py-1.5 ${subjectId === s.id ? "bg-blue-500" : "bg-white"
+              }`}
           >
             <Text
-              className={`text-xs ${
-                subjectId === s.id ? "text-white" : "text-neutral-700"
-              }`}
+              className={`text-xs ${subjectId === s.id ? "text-white" : "text-neutral-700"
+                }`}
             >
               {s.name}
             </Text>
@@ -115,11 +114,9 @@ function EvaluationEditItem({
         </Pressable>
       )}
       {showPicker && (
-        <DateTimePicker
+        <DateTimeInput
           value={pickerMode === "date" ? date : time ?? date}
           mode={pickerMode}
-          is24Hour={true}
-          display={Platform.OS === "ios" ? "spinner" : "default"}
           onChange={onChangeDate}
         />
       )}
@@ -129,14 +126,12 @@ function EvaluationEditItem({
           <Pressable
             key={value}
             onPress={() => setType(value as EvaluationType)}
-            className={`rounded-full px-3 py-1.5 ${
-              type === value ? "bg-blue-500" : "bg-white"
-            }`}
+            className={`rounded-full px-3 py-1.5 ${type === value ? "bg-blue-500" : "bg-white"
+              }`}
           >
             <Text
-              className={`text-xs ${
-                type === value ? "text-white" : "text-neutral-700"
-              }`}
+              className={`text-xs ${type === value ? "text-white" : "text-neutral-700"
+                }`}
             >
               {label}
             </Text>

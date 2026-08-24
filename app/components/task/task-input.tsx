@@ -1,4 +1,4 @@
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker"
 import { Subject } from "@/types/subject"
 import { useState } from "react"
 import { Platform, Pressable, ScrollView, Text, View } from "react-native"
@@ -8,6 +8,7 @@ import { formatDateLocal } from "@/lib/date"
 import { useTasksStore } from "@/stores/tasksStore"
 import { router } from "expo-router"
 import { useCareerStore } from "@/stores/careerStore"
+import DateTimeInput from "../ui/date-time-input"
 
 interface FormState {
   subjectId: string
@@ -127,10 +128,9 @@ export default function TaskInput({ subjects, subjectId, onCancel }: Props) {
           </Pressable>
         )}
         {form.showPicker && (
-          <DateTimePicker
+          <DateTimeInput
             value={form.date ?? new Date()}
             mode="date"
-            display={Platform.OS === "ios" ? "spinner" : "default"}
             onChange={onChangeDate}
           />
         )}

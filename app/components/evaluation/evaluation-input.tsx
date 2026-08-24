@@ -1,5 +1,5 @@
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
-import { Evaluation, EvaluationType } from "@/types/evaluation"
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import { EvaluationType } from "@/types/evaluation"
 import { Subject } from "@/types/subject"
 import { useState } from "react"
 import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native"
@@ -7,6 +7,7 @@ import clsx from "clsx"
 import { formatDateLocal, formatTimeLocal } from "@/lib/date"
 import { useEvaluationsStore } from "@/stores/evaluationsStore"
 import { router } from "expo-router"
+import DateTimeInput from "../ui/date-time-input"
 
 const EVALUATION_TYPES: { value: EvaluationType; label: string }[] = [
   { value: "partial", label: "Parcial" },
@@ -121,7 +122,7 @@ export default function EvaluationInput({ subjects, subjectId, onCancel }: Props
                 <Text className={clsx(
                   "text-sm font-medium",
                   form.subjectId === s.id ? "text-white" : "text-black"
-                  )}>{s.name}</Text>
+                )}>{s.name}</Text>
               </Pressable>
             ))}
           </View>
@@ -165,11 +166,9 @@ export default function EvaluationInput({ subjects, subjectId, onCancel }: Props
           </Pressable>
         )}
         {form.showPicker && (
-          <DateTimePicker
+          <DateTimeInput
             value={form.pickerMode === "date" ? form.date : form.time ?? form.date}
             mode={form.pickerMode}
-            is24Hour={true}
-            display={Platform.OS === "ios" ? "spinner" : "default"}
             onChange={onChangeDate}
           />
         )}
