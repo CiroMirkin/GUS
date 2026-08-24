@@ -17,10 +17,10 @@ function ScheduleLabel({ label, time, modality }: LabelProps) {
                 <Text className="text-xs font-bold">{label}</Text>
                 {modality &&
                 <Text className={cn(
-                    "text-xs font-semibold rounded p-px px-1",
-                    modality == "in_person" ? "bg-green/70" : "bg-blue/50",
+                    "text-xs font-semibold rounded pt-px px-2",
+                    modality == "in_person" ? "bg-green" : "bg-blue/50",
                 )}>
-                    {MODALITY_LABELS[modality]}
+                    {MODALITY_LABELS[modality].at(0)?.toUpperCase()}
                 </Text>
                 }
             </View>
@@ -33,13 +33,12 @@ function ScheduleLabel({ label, time, modality }: LabelProps) {
 
 interface ItemProps {
     schedule: ScheduleType
-    isLast: boolean
     isProximate: boolean
 }
 
 const TODAY_STATUSES = ["before", "during", "after", "no-time"]
 
-function ScheduleItem({ schedule, isLast, isProximate }: ItemProps) {
+function ScheduleItem({ schedule, isProximate }: ItemProps) {
     const { status, minutesUntilStart, minutesUntilEnd } = useScheduleTimeInfo(schedule)
     const itIsToday = TODAY_STATUSES.includes(status)
     const isDimmed = !itIsToday && !isProximate
@@ -56,7 +55,7 @@ function ScheduleItem({ schedule, isLast, isProximate }: ItemProps) {
     }
 
     return (
-        <View className={cn("px-2 pr-3", !isLast && "border-r-2", isDimmed && "opacity-70")}>
+        <View className={cn("px-2 pr-4", isDimmed && "opacity-60")}>
             <ScheduleLabel label={label} time={time} modality={schedule.modality} />
             {status === "before" && minutesUntilStart !== null && (
                 <Text className="text-xs font-semibold">Empieza en {formatMinutes(minutesUntilStart)}</Text>

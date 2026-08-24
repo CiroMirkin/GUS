@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { Schedule as ScheduleType } from "@/types/subject"
 import { Pressable, View } from "react-native"
 import { getMostProximateSchedule, sortSchedulesByDay } from "@/lib/schedule"
@@ -34,14 +34,15 @@ function Schedule({ schedules, subjectId }: Props) {
     }
 
     return (
-        <Pressable onPress={() => setDrawerMode("detail")} className="py-4 px-2 mb-4 bg-yellow rounded-lg border-2 flex-row gap-2">
+        <Pressable onPress={() => setDrawerMode("detail")} className="py-4 px-2 mb-4 bg-yellow rounded-lg border-2 border-b-4 flex-row justify-evenly gap-2">
             {sortedSchedules.map((schedule, index) => (
-                <ScheduleItem
-                    key={schedule.id}
-                    schedule={schedule}
-                    isLast={index === sortedSchedules.length - 1}
-                    isProximate={proximate?.schedule === schedule}
-                />
+                <Fragment key={schedule.id}>
+                    {index > 0 && <View className="w-0.5 bg-black self-stretch" />}
+                    <ScheduleItem
+                        schedule={schedule}
+                        isProximate={proximate?.schedule === schedule}
+                    />
+                </Fragment>
             ))}
 
             <ScheduleDetailDrawer
