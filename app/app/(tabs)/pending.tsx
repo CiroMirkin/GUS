@@ -6,7 +6,7 @@ import { Text, View } from "react-native"
 import { useRouter } from "expo-router"
 import EmptySpace from "@/components/ui/empty-space"
 import { evaluationToDate } from "@/lib/date"
-import AddMenu from "@/components/ui/add-menu"
+import Menu from "@/components/ui/menu"
 import TaskList from "@/components/task/task-list"
 import { useTasksStore } from "@/stores/tasksStore"
 
@@ -49,7 +49,7 @@ export default function PendingTab() {
     <ScreenScroll>
       <View className="flex-row items-center justify-between px-4 pt-6 pb-4">
         <Text className="text-2xl font-bold text-black">Pendientes</Text>
-        <AddMenu options={options} />
+        <Menu options={options} />
       </View>
 
       <View className="px-4 flex-col gap-4">

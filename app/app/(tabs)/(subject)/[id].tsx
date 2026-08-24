@@ -3,7 +3,7 @@ import { View, Text } from "react-native"
 import ScreenScroll from "@/components/screen-scroll"
 import { useSubjectsStore } from "@/stores/subjectsStore"
 import SubjectContent from "@/components/subject/subject-content"
-import AddMenu from "@/components/ui/add-menu"
+import Menu from "@/components/ui/menu"
 import Schedule from "@/components/subject/schedule"
 import { useState } from "react"
 import NewScheduleDrawer from "@/components/subject/new-schedule-drawer"
@@ -52,7 +52,9 @@ function SubjectScreen() {
             <View className="px-4 pt-6">
                 <View className="flex-row items-center justify-between pb-4 mb-4">
                     <Text className="text-2xl text-left font-bold">{subject.name}</Text>
-                    <AddMenu options={options} />
+                    <View className="flex-row gap-2">
+                      <Menu options={options} />
+                    </View>
                 </View>
                 <Schedule schedules={subject.schedules} subjectId={subject.id} />
 
