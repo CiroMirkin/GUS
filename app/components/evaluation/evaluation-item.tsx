@@ -12,6 +12,7 @@ import { icons } from "@/constants/icons"
 import { useSubjectsByCareer } from "@/hooks/useSubjectsByCareer"
 import { Linking } from "react-native"
 import ButtonIcon from "../ui/button-icon"
+import UrlLink from "../ui/url-link"
 
 interface Props {
     item: Evaluation
@@ -86,12 +87,7 @@ export default function EvaluationItem({ item }: Props) {
                         <Text className="text-base text-black">{item.note}</Text>
                     ) : null}
                     {item.link ? (
-                        <Pressable onPress={() => Linking.openURL(item.link as string)} className="flex-row items-center gap-2">
-                            <icons.link width={16} height={16} />
-                            <Text className="flex-1 text-base text-black underline" numberOfLines={1}>
-                                {item.link}
-                            </Text>
-                        </Pressable>
+                        <UrlLink url={item.link as string} />
                     ) : null}
                     {item.topics && item.topics.length > 0 ? (
                         <View className="gap-1">

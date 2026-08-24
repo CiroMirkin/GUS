@@ -9,6 +9,7 @@ import { Linking } from "react-native"
 import { isTaskUrgent } from "@/lib/task"
 import TaskEditItem from "@/components/task/task-edit-item"
 import ButtonIcon from "../ui/button-icon"
+import UrlLink from "../ui/url-link"
 
 interface Props {
     task: Task
@@ -75,12 +76,7 @@ export default function TaskItem({ task, subjectName }: Props) {
                         <Text className="text-base text-neutral-700">{task.note}</Text>
                     )}
                     {task.link && (
-                        <Pressable onPress={() => Linking.openURL(task.link as string)} className="flex-row items-center gap-2">
-                            <icons.link width={16} height={16} />
-                            <Text className="flex-1 text-base text-black underline" numberOfLines={1}>
-                                {task.link}
-                            </Text>
-                        </Pressable>
+                        <UrlLink url={task.link as string} />
                     )}
 
                     <View className="flex-row items-center justify-end gap-3 pt-4 border-t-2">
