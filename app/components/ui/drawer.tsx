@@ -27,7 +27,7 @@ export default function Drawer({ visible, onClose, children }: Props) {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <View className="w-full rounded-t-2xl bg-white p-4 pb-8 border-2 border-b-0 border-neutral-200">
+        <View className="w-full rounded-t-2xl bg-white p-4 pb-20 border-2 border-b-0 border-neutral-200">
           <View className="mb-4 items-center">
             <View className="h-1.5 w-12 rounded-full bg-neutral-300" />
           </View>
