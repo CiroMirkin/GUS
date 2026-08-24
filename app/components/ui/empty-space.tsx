@@ -10,7 +10,7 @@ function EmptySpace({ icon, message }: Props) {
   const Icon = icon ? icons[icon] : null
 
   return (
-    <View className="items-center justify-center py-10 opacity-50">
+    <View className="items-center justify-center pt-30 opacity-50">
       {Icon && <Icon width={48} height={48} />}
       <Text className="mt-2 text-lg font-semibold text-black">{message}</Text>
     </View>
