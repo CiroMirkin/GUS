@@ -52,13 +52,13 @@ interface LabelProps {
 
 function ScheduleLabel({ scheduleInfo, remainingLabel }: LabelProps) {
   if (remainingLabel) {
-    return <Text className="text-xs font-semibold">{remainingLabel}</Text>
+    return <Text className="text-xs font-bold text-black">{remainingLabel}</Text>
   }
 
   if (!scheduleInfo) return null
 
   return (
-    <Text className={cn("text-xs", scheduleInfo.isToday && "font-semibold")}>
+    <Text className={cn("text-xs text-black", scheduleInfo.isToday ? "font-bold" : "font-semibold opacity-60")}>
       {scheduleInfo.label}
     </Text>
   )
