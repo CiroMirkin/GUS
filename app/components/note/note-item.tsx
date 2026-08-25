@@ -20,7 +20,7 @@ export default function NoteItem({ note, subjectName }: Props) {
             }}
             asChild
         >
-            <View className="flex-1 flex-col gap-2 rounded-lg border-2 bg-[#abdef1] p-2 px-3">
+            <View className="flex-col gap-2 rounded-lg border-2 bg-[#abdef1] p-2 px-3">
                 <Text numberOfLines={1} className="text-base text-black">
                     {firstLine(note.content)}
                 </Text>
