@@ -1,17 +1,39 @@
 import "./global.css"
-import { Stack } from "expo-router"
+import { Stack, useNavigationContainerRef } from "expo-router"
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context"
 import { View } from "react-native"
 import { useCareerStore } from "@/stores/careerStore"
 import SetUp from "./set-up"
+import * as Sentry from "@sentry/react-native"
+import { useEffect } from "react"
 
-export default function RootLayout() {
+const navigationIntegration = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true,
+})
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  tracesSampleRate: 1.0,
+  integrations: [navigationIntegration],
+})
+
+function RootLayout() {
+  const navigationRef = useNavigationContainerRef()
+
+  useEffect(() => {
+    if (navigationRef?.current) {
+      navigationIntegration.registerNavigationContainer(navigationRef)
+    }
+  }, [navigationRef])
+
   return (
     <SafeAreaProvider>
       <StackWithInsets />
     </SafeAreaProvider>
   )
 }
+
+export default Sentry.wrap(RootLayout)
 
 function StackWithInsets() {
   const insets = useSafeAreaInsets()
@@ -31,3 +53,4 @@ function StackWithInsets() {
     </View>
   )
 }
+
