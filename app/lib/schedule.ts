@@ -1,5 +1,4 @@
 import { Schedule } from "@/types/subject"
-import { parse } from "@formkit/tempo"
 
 const DAYS_MAP: Record<string, number> = {
   "Domingo": 0,
@@ -187,4 +186,38 @@ export function getScheduleDuration(schedule: Schedule): string | null {
 
   const diffMinutes = Math.round(diffMs / 60000)
   return formatMinutes(diffMinutes)
+}
+
+export interface UpcomingScheduleInfo {
+  label: string
+  isToday: boolean
+  status: ScheduleStatus
+  minutesUntilStart: number | null
+  minutesUntilEnd: number | null
+}
+
+export function getUpcomingScheduleInfo(
+  schedules?: Schedule[], now: Date = new Date()
+): UpcomingScheduleInfo | null {
+  if (!schedules || schedules.length === 0) return null
+
+  const todaySchedule = schedules.find(
+    (schedule) => TODAY_STATUSES.includes(getScheduleTimeInfo(schedule, now).status)
+  )
+  if (todaySchedule) {
+    const info = getScheduleTimeInfo(todaySchedule, now)
+    const label = `Hoy ${todaySchedule.startTime ? `${todaySchedule.startTime}hs` : ""}`
+
+    return { label, isToday: true, ...info }
+  }
+
+  const tomorrowSchedule = schedules.find(
+    (schedule) => getScheduleTimeInfo(schedule, now).status === "tomorrow"
+  )
+  if (tomorrowSchedule) {
+    const label = `Mañana ${tomorrowSchedule.startTime ? `${tomorrowSchedule.startTime}hs` : ""}`
+    return { label, isToday: false, status: "tomorrow", minutesUntilStart: null, minutesUntilEnd: null }
+  }
+
+  return null
 }
