@@ -6,13 +6,22 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_SENTRY_DSN": "https://e6a013bb3fdeb68675015361137d183a@o4511966309974016.ingest.us.sentry.io/4511966319214592"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_SENTRY_DSN": "https://e6a013bb3fdeb68675015361137d183a@o4511966309974016.ingest.us.sentry.io/4511966319214592"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_SENTRY_DSN": "https://e6a013bb3fdeb68675015361137d183a@o4511966309974016.ingest.us.sentry.io/4511966319214592"
+      }
     },
     "production-apk": {
       "extends": "production",
