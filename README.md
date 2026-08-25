@@ -4,7 +4,7 @@
 
 *Organizador académico para estudiantes universitarios*
 
-[Características](#características) • [Empezando](#empezando) • [Scripts](#scripts) • [Release automática](#release-automática) • [Estructura del proyecto](#estructura-del-proyecto) • [Modelo de datos](#modelo-de-datos)
+[Características](#características) • [Empezando](#empezando) • [Variables de entorno](#variables-de-entorno) • [Scripts](#scripts) • [Release automática](#release-automática) • [Estructura del proyecto](#estructura-del-proyecto) • [Modelo de datos](#modelo-de-datos)
 
 </div>
 
@@ -57,6 +57,33 @@ npm run android
 npm run ios
 npm run web
 ```
+
+## Variables de entorno
+
+El proyecto usa dos variables relacionadas con [Sentry](https://sentry.io) para el reporte de errores.
+
+| Variable | Tipo | Dónde vive |
+| --- | --- | --- |
+| `EXPO_PUBLIC_SENTRY_DSN` | Pública | `.env` local y `eas.json` (por `build profile`) |
+| `SENTRY_AUTH_TOKEN` | Secreta | [EAS Environment Variables](https://expo.dev) (dashboard o `eas env:set`) |
+
+- **`EXPO_PUBLIC_SENTRY_DSN`**: identifica el proyecto de Sentry al que se envían los eventos. No es un secreto (Sentry la documenta como segura para incluir en código de cliente), pero se maneja como variable de entorno para poder cambiarla por ambiente sin tocar código. Se define localmente en un archivo `.env` en la raíz:
+
+  ```bash
+  # .env
+  EXPO_PUBLIC_SENTRY_DSN=https://...@....ingest.us.sentry.io/...
+  ```
+
+- **`SENTRY_AUTH_TOKEN`**: se usa en build time para subir source maps y crear releases en Sentry. Este sí es un secreto — nunca debe vivir en `.env`, en `eas.json` ni en el repositorio. Se configura como **EAS Secret**, con visibilidad `secret`:
+
+  ```bash
+  eas env:set --name SENTRY_AUTH_TOKEN --value "sntrys_TU_TOKEN" --scope project --visibility secret --environment production
+  ```
+
+  También se puede cargar desde el dashboard de Expo, en **Environment Variables** dentro de la configuración del proyecto.
+
+> [!IMPORTANT]
+> `.env` está en `.gitignore` y no debe commitearse. Si `SENTRY_AUTH_TOKEN` llegó a estar en un `.env` commiteado alguna vez, hay que rotarlo desde **Developer Settings → Auth Tokens** en Sentry.
 
 ## Scripts
 

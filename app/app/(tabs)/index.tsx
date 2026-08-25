@@ -7,7 +7,6 @@ import { useSubjectsStore } from "@/stores/subjectsStore"
 import { useShallow } from 'zustand/react/shallow'
 import { useState } from "react"
 import { Pressable, Text, View } from "react-native"
-import { icons } from "@/constants/icons"
 import { useSubjectsByCareer } from "@/hooks/useSubjectsByCareer"
 import { useChangeActualCareer } from "@/hooks/useChangeActualCareer"
 import { useCareerStore } from "@/stores/careerStore"
