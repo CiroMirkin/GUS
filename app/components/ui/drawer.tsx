@@ -21,11 +21,11 @@ export default function Drawer({ visible, onClose, children }: Props) {
       animationOut="slideOutDown"
       animationInTiming={300}
       animationOutTiming={300}
-      avoidKeyboard
       propagateSwipe
+      statusBarTranslucent
     >
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View className="w-full rounded-t-2xl bg-white p-4 pb-20 border-2 border-b-0 border-neutral-200">
           <View className="mb-4 items-center">
